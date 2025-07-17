@@ -96,8 +96,7 @@ CREATE TABLE return_status
 
 
 ### Entity-Relationship Diagram
-![ERD](Coffee%20Sales%20Analysis/Screenshot%202025-07-07%20150153.png)
-
+![ERD](Library_Management/Screenshot 2025-07-11 13-31-52.png)
 
 
 ### 2. CRUD Operations (Basic)
