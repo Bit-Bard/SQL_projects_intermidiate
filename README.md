@@ -93,7 +93,11 @@ CREATE TABLE return_status
 
 ### You can get the VALUES in Final_Query(uploaded) you can refer from there 
 
-ADD erp table
+
+
+### Entity-Relationship Diagram
+![ERD](Coffee%20Sales%20Analysis/Screenshot%202025-07-07%20150153.png)
+
 
 
 ### 2. CRUD Operations (Basic)
