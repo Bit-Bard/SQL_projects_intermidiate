@@ -93,10 +93,10 @@ CREATE TABLE return_status
 
 ### You can get the VALUES in Final_Query(uploaded) you can refer from there 
 
-
-
 ### Entity-Relationship Diagram
-![ERD](Library_Management/Screenshot 2025-07-11 13-31-52.png)
+![ERD](Library_Management/Screenshot%202025-07-11%20133152.png)
+
+
 
 
 ### 2. CRUD Operations (Basic)
