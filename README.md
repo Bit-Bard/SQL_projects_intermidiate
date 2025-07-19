@@ -379,13 +379,14 @@ DELIMITER ;
 
 This project demonstrates the application of SQL skills in creating and managing a library management system. It includes database setup, data manipulation, and advanced querying, providing a solid foundation for data management and analysis.
 
-## Spotify Analysis SQL Project 4
+# Spotify Analysis SQL Project 4
 
 **Project Title**: Spotify Analysis
 **Level**: Intermidiate
 **Database**: [Click Here to get Dataset](https://www.kaggle.com/datasets/sanjanchaudhari/spotify-dataset)
 
-### spotify logo 
+![Spotitfy](Spotify%20Analysis/Screenshot%202025-07-19%20152638.png)
+
 
 This project involves analyzing a Spotify dataset with various attributes about tracks, albums, and artists using **SQL**. It covers an end-to-end process of normalizing a denormalized dataset, performing SQL queries of varying complexity (easy, medium, and advanced), and optimizing query performance. The primary goals of the project are to practice advanced SQL skills and generate valuable insights from the dataset.
 
@@ -546,7 +547,7 @@ SELECT * FROM
 WHERE ranking <=3
 ORDER BY artist;
 ```
-logo adv1
+![Visual Explaination](Spotify%20Analysis/Adv_1.png)
 
 Q12. Write a Query to find a tracks where the liveness score is above average 
 ```sql
@@ -556,7 +557,7 @@ spotify
 WHERE liveness > (SELECT AVG(liveness) FROM spotify) 
 ORDER BY liveness;
 ```
-logo adv2
+![Visual Explaination](Spotify%20Analysis/Adv_2.png)
 
 Q13. Use a with clause to find the difference between the highest and lowest energy values for tracks in each album
 ```sql
@@ -577,7 +578,8 @@ SELECT
 FROM cte
 ORDER BY Highest_energy - Lowest_energy DESC
 ```
-logo adv3
+![Viusal Explaination](Spotify%20Analysis/Adv_3.png)
+
 
 
 ## Technology Stack
