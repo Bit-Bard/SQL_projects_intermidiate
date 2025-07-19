@@ -1,5 +1,5 @@
 # SQL_projects_intermidiate
-# Intermidiate Sql Project :  Library Management System, 
+# Intermidiate Sql Project :  Library Management System, Spotify Analysis
 
 ## Library Management System SQL Project 3
 
@@ -379,9 +379,228 @@ DELIMITER ;
 
 This project demonstrates the application of SQL skills in creating and managing a library management system. It includes database setup, data manipulation, and advanced querying, providing a solid foundation for data management and analysis.
 
+## Spotify Analysis SQL Project 4
+
+**Project Title**: Spotify Analysis
+**Level**: Intermidiate
+**Database**: [Click Here to get Dataset](https://www.kaggle.com/datasets/sanjanchaudhari/spotify-dataset)
+
+### spotify logo 
+
+This project involves analyzing a Spotify dataset with various attributes about tracks, albums, and artists using **SQL**. It covers an end-to-end process of normalizing a denormalized dataset, performing SQL queries of varying complexity (easy, medium, and advanced), and optimizing query performance. The primary goals of the project are to practice advanced SQL skills and generate valuable insights from the dataset.
+
+Table Creation
+
+```sql
+-- create table
+DROP TABLE IF EXISTS spotify;
+CREATE TABLE spotify (
+    artist VARCHAR(255),
+    track VARCHAR(255),
+    album VARCHAR(255),
+    album_type VARCHAR(50),
+    danceability FLOAT,
+    energy FLOAT,
+    loudness FLOAT,
+    speechiness FLOAT,
+    acousticness FLOAT,
+    instrumentalness FLOAT,
+    liveness FLOAT,
+    valence FLOAT,
+    tempo FLOAT,
+    duration_min FLOAT,
+    title VARCHAR(255),
+    channel VARCHAR(255),
+    views FLOAT,
+    likes BIGINT,
+    comments BIGINT,
+    licensed BOOLEAN,
+    official_video BOOLEAN,
+    stream BIGINT,
+    energy_liveness FLOAT,
+    most_played_on VARCHAR(50)
+);
+```
+## Project Steps
+
+### 1. Data Exploration
+```sql
+SELECT count(*) FROM spotify; 
+SELECT DISTINCT(artist), COUNT(DISTINCT(artist)) FROM spotify;
+SELECT COUNT(DISTINCT(artist)) FROM spotify;
+SELECT MAX(duration_min) FROM spotify;
+SELECT MIN(duration_min) FROM spotify;
+```
+```sql
+SELECT * 
+FROM spotify WHERE duration_min=0;
+```
+```sql
+DELETE FROM spotify
+WHERE duration_min=0;
+```
+### 4. Querying the Data
+After the data is inserted, various SQL queries can be written to explore and analyze the data. Queries are categorized into **easy**, **medium**, and **advanced** levels to help progressively develop SQL proficiency.
+
+### Data Analysis --> Base category
+
+Q1. Retreive the name of all the track that have more than 1 billion stream
+```sql
+SELECT * FROM spotify
+WHERE stream > 10000000;
+```
+Q2. List all albumns along with thier repective artist
+```sql
+SELECT DISTINCT(album), artist
+FROM spotify
+ORDER BY 1;
+```
+
+Q3. Get total number of comments from track where licensed = True
+```sql
+SELECT SUM(comments) 
+FROM spotify
+WHERE licensed= 'true';
+```
+
+Q4. Find all the track where album type is single
+```sql
+SELECT *
+FROM spotify
+WHERE album_type='single';
+```
+
+Q5. Find total number of track by each artist
+```sql
+SELECT artist, COUNT(track) 
+FROM spotify
+GROUP BY 1
+ORDER BY 2 DESC ;
+```
+
+### Data Analysis --> Medium Category
+Q6. Calculate the Average Danceability of tracks in each album
+  ```sql
+  SELECT 
+	album, ROUND(AVG(danceability), 2) AS Avg_Danceability
+  FROM spotify
+  GROUP BY 1 
+  ORDER BY 2 DESC;
+ ```
+ 
+Q7. Find the top 5 tracks with the highest energy values
+  ```sql
+  SELECT DISTINCT(track), MAX(energy)
+  FROM spotify
+  GROUP BY 1
+  ORDER BY 2 DESC LIMIT 5;
+  ```
+
+Q8. List all the tracks with thier likes and views where official video =True
+```sql
+SELECT 
+	track, 
+	SUM(likes) AS total_likes,
+    SUM(views) AS total_views
+FROM spotify
+GROUP BY 1
+ORDER BY 2 DESC ;
+```
+
+Q9. for each album, calculate total views of all associated tracks
+```sql
+SELECT album, track, SUM(views)
+FROM spotify
+GROUP BY 1, 2
+ORDER BY 3 DESC ;
+```
+
+Q10. Retrieve the track name that have been streamed on on spotify more than youtube
+```
+SELECT * FROM 
+(
+	SELECT 
+		track,
+		COALESCE(SUM(CASE WHEN most_played_on = 'Spotify' THEN stream END), 0) AS most_played_on_spotify,
+		COALESCE(SUM(CASE WHEN most_played_on = 'youtube' THEN stream END), 0) AS most_played_on_youtube
+	FROM spotify
+	GROUP BY 1
+) as t1
+WHERE most_played_on_spotify > most_played_on_youtube AND most_played_on_youtube != 0;
+```
+  
+### Data Analyze --> Advanced Category --> with visual Explanation
+Q.11 find the top 3 most viewed tracks for each artist using window fucntion 
+```sql
+SELECT * FROM
+(
+	SELECT 
+		artist, 
+		track,
+		SUM(views),
+		DENSE_RANK() OVER(PARTITION BY artist ORDER BY SUM(views) DESC )AS ranking
+	FROM 
+	spotify
+	GROUP BY 1,2
+) as t1
+WHERE ranking <=3
+ORDER BY artist;
+```
+logo adv1
+
+Q12. Write a Query to find a tracks where the liveness score is above average 
+```sql
+SELECT artist, track, liveness
+FROM 
+spotify
+WHERE liveness > (SELECT AVG(liveness) FROM spotify) 
+ORDER BY liveness;
+```
+logo adv2
+
+Q13. Use a with clause to find the difference between the highest and lowest energy values for tracks in each album
+```sql
+WITH cte
+AS
+(
+	SELECT 
+		album,
+		MAX(energy) as Highest_energy,
+		MIN(energy) AS Lowest_energy
+	FROM
+	spotify
+	GROUP BY album
+)
+SELECT 
+	album, 
+    ROUND(Highest_energy - Lowest_energy, 2) AS Energy_Difference
+FROM cte
+ORDER BY Highest_energy - Lowest_energy DESC
+```
+logo adv3
 
 
+## Technology Stack
+- **Database**: `MySQL`
+- **SQL Queries**: DDL, DML, Aggregations, Joins, Subqueries, Window Functions
+- **Tools**: pgAdmin 4 (or any SQL editor), PostgreSQL (via Homebrew, Docker, or direct installation)
 
+## How to Run the Project
+1. Install `MySQL`.
+2. Set up the database schema and tables using the provided normalization structure.
+3. Insert the sample data into the respective tables.
+4. Execute SQL queries to solve the listed problems.
+5. Explore query optimization techniques for large datasets.
+
+---
+## Next Steps
+- **Visualize the Data**: Use a data visualization tool like **Tableau** or **Power BI** to create dashboards based on the query results.
+- **Expand Dataset**: Add more rows to the dataset for broader analysis and scalability testing.
+- **Advanced Querying**: Dive deeper into query optimization and explore the performance of SQL queries on larger datasets.
+---
+
+## Contributing
+If you would like to contribute to this project, feel free to fork the repository, submit pull requests, or raise issues.
 
 ## Author - Dhruv Devaliya-->Bit-Bard
 
