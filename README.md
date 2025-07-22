@@ -585,7 +585,6 @@ ORDER BY Highest_energy - Lowest_energy DESC
 ## Technology Stack
 - **Database**: `MySQL`
 - **SQL Queries**: DDL, DML, Aggregations, Joins, Subqueries, Window Functions
-- **Tools**: pgAdmin 4 (or any SQL editor), PostgreSQL (via Homebrew, Docker, or direct installation)
 
 ## How to Run the Project
 1. Install `MySQL`.
